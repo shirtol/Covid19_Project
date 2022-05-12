@@ -23,7 +23,6 @@ export class CountryController {
             const data = await Utils.getFetchedData(
                 "https://corona-api.com/countries"
             );
-            //!need to find a better way than Promise.all()
             const specificData = data.data.map(
                 (country) => new Country(country)
             );
