@@ -1,0 +1,22 @@
+{
+  "name": "covid19_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shirtol/Covid19_Project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shirtol/Covid19_Project/issues"
+  },
+  "homepage": "https://github.com/shirtol/Covid19_Project#readme",
+  "dependencies": {
+    "chart.js": "^3.7.1"
+  }
+}
