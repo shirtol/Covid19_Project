@@ -20,6 +20,4 @@ import { CountryController } from "./CountryController.js";
 
 const countryController = await CountryController.build();
 
-const countriesArr = countryController.countries;
-
-console.log(countriesArr);
+console.log(countryController);
