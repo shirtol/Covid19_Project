@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/shirtol/Covid19_Project#readme",
   "dependencies": {
-    "chart.js": "^3.7.1"
+    "chart.js": "^3.7.1",
+    "eslint": "^8.15.0"
   }
 }
