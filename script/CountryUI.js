@@ -2,7 +2,7 @@ import { ContinentSelector } from "./ContinentSelector.js";
 
 export class CountryUI {
     constructor() {
-        Chart.defaults.font.size = 10;
+        Chart.defaults.font.size = 12;
         this.ctx = document.getElementById("chart").getContext("2d");
         this.countriesDropdownMenu = document.querySelector("#all-countries");
         this.countriesDropdownBtn = document.querySelector(".drop-btn");
@@ -18,37 +18,93 @@ export class CountryUI {
         return [firstLetterNum, 60 + countryIdx, 100 + countryIdx];
     };
 
-    getObjOfData = (continents, continentName, chosenData = "critical") => {
-        const dataObj = {};
-        continents[continentName].forEach((country) => {
-            dataObj[country.name] = country.latestData[chosenData];
-        });
-        return dataObj;
+    getObjOfData = (continents, continentName, condition = "critical") => {
+        return continents[continentName].reduce((acc, curr) => {
+            acc[curr.name] = curr.latestData[condition];
+            return acc;
+        }, {});
     };
 
-    drawChart = (chosenData) => {
+    createDataset = (conditionObj, titleIdentifier, colorOffset) => {
+        const dataset = {
+            label: `Number of ${titleIdentifier} cases`,
+            hidden: titleIdentifier !== "confirmed",
+            data: Object.values(conditionObj),
+            backgroundColor: (point) => {
+                const countryIdx = point.index;
+                const countryName = Object.keys(conditionObj)[countryIdx];
+                const [r, g, b] = this.getColorByCountryName(
+                    countryName,
+                    countryIdx + colorOffset
+                );
+                return `rgba(${r},${g},${b},0.6`;
+            },
+            tension: 0.4,
+            cubicInterpolationMode: "monotone",
+        };
+        return dataset;
+    };
+
+    createConditionObj = (continents, continentName) => {
+        const confirmedConditionObj = this.getObjOfData(
+            continents,
+            continentName,
+            "confirmed"
+        );
+        const recoveredConditionObj = this.getObjOfData(
+            continents,
+            continentName,
+            "recovered"
+        );
+        const criticalConditionObj = this.getObjOfData(
+            continents,
+            continentName,
+            "critical"
+        );
+        const deathsConditionObj = this.getObjOfData(
+            continents,
+            continentName,
+            "deaths"
+        );
+        return [
+            confirmedConditionObj,
+            recoveredConditionObj,
+            criticalConditionObj,
+            deathsConditionObj,
+        ];
+    };
+
+    drawChart = (continents, continentName) => {
+        const conditionsObjectsArr = this.createConditionObj(
+            continents,
+            continentName
+        );
         if (this.chart === null) {
             const chart = new Chart(this.ctx, {
                 type: "bar",
                 data: {
-                    labels: Object.keys(chosenData),
+                    labels: Object.keys(conditionsObjectsArr[0]),
                     datasets: [
-                        {
-                            label: "Number of confirmed cases",
-                            data: Object.values(chosenData),
-                            backgroundColor: (point) => {
-                                const countryIdx = point.index;
-                                const countryName =
-                                    Object.keys(chosenData)[countryIdx];
-                                const [r, g, b] = this.getColorByCountryName(
-                                    countryName,
-                                    countryIdx
-                                );
-                                return `rgba(${r},${g},${b},0.6`;
-                            },
-                            tension: 0.4,
-                            cubicInterpolationMode: "monotone",
-                        },
+                        this.createDataset(
+                            conditionsObjectsArr[0],
+                            "confirmed",
+                            0
+                        ),
+                        this.createDataset(
+                            conditionsObjectsArr[1],
+                            "recovered",
+                            30
+                        ),
+                        this.createDataset(
+                            conditionsObjectsArr[2],
+                            "critical",
+                            60
+                        ),
+                        this.createDataset(
+                            conditionsObjectsArr[3],
+                            "deaths",
+                            90
+                        ),
                     ],
                 },
                 options: {
@@ -81,15 +137,12 @@ export class CountryUI {
             });
             this.chart = chart;
         } else {
-            this.chart.data.labels = Object.keys(chosenData);
-            this.chart.data.datasets[0].data = Object.values(chosenData);
+            this.chart.data.labels = Object.keys(conditionsObjectsArr[0]);
+            this.chart.data.datasets.forEach((dataset, idx) => {
+                dataset.data = Object.values(conditionsObjectsArr[idx]);
+            });
             this.chart.update();
         }
-    };
-
-    createChart = (continents, continentName, chosenData) => {
-        const data = this.getObjOfData(continents, continentName, chosenData);
-        this.drawChart(data);
     };
 
     createDropdownCountiesElements = (continents, continentName = "Africa") => {

@@ -83,14 +83,18 @@ export class CountryController {
     initializeView = () => {
         this.addEventToCountriesBtn();
         this.closeDropdownWhenClickOnWindow();
-        this.countryUI.createChart(this.continents, "Africa");
+        this.countryUI.drawChart(this.continents, "Africa");
         this.countryUI.createDropdownCountiesElements(
             this.continents,
             "Africa"
         );
         this.countryUI.continentSelector.selectedContinent.addChangeListener(
             (selectedContinent) =>
-                this.countryUI.createChart(this.continents, selectedContinent)
+                this.countryUI.drawChart(
+                    this.continents,
+                    selectedContinent,
+                    "critical"
+                )
         );
         this.countryUI.continentSelector.selectedContinent.addChangeListener(
             (selectedContinent) =>
