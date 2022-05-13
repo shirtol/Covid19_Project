@@ -10,17 +10,12 @@ export class CountryUI {
         this.chart = null;
     }
 
-    getColorByCountryName = (countryName) => {
+    getColorByCountryName = (countryName, countryIdx) => {
         const allLetters = "abcdefghijklmnopqrstuvwxyz";
         const firstLetterNum =
-            allLetters.indexOf(countryName[0].toLowerCase()) * 10;
-        const secondLetterNum =
-            allLetters.indexOf(countryName[1].toLowerCase()) * 10;
-        const lastLetterNum =
-            allLetters.indexOf(
-                countryName[countryName.length - 1].toLowerCase()
-            ) * 10;
-        return [firstLetterNum, secondLetterNum, lastLetterNum];
+            allLetters.indexOf(countryName[0].toLowerCase()) * 9;
+
+        return [firstLetterNum, 60 + countryIdx, 100 + countryIdx];
     };
 
     getObjOfData = (continents, continentName, chosenData = "critical") => {
@@ -45,8 +40,10 @@ export class CountryUI {
                                 const countryIdx = point.index;
                                 const countryName =
                                     Object.keys(chosenData)[countryIdx];
-                                const [r, g, b] =
-                                    this.getColorByCountryName(countryName);
+                                const [r, g, b] = this.getColorByCountryName(
+                                    countryName,
+                                    countryIdx
+                                );
                                 return `rgba(${r},${g},${b},0.4`;
                             },
                             tension: 0.4,
