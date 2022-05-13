@@ -4,6 +4,8 @@ export class CountryUI {
     constructor() {
         Chart.defaults.font.size = 10;
         this.ctx = document.getElementById("myChart").getContext("2d");
+        this.countriesDropdownMenu = document.querySelector("#all-countries");
+        this.countriesDropdownBtn = document.querySelector(".drop-btn");
         this.continentSelector = new ContinentSelector();
         this.chart = null;
     }
@@ -89,5 +91,18 @@ export class CountryUI {
     createChart = (continents, continentName, chosenData) => {
         const data = this.getObjOfData(continents, continentName, chosenData);
         this.drawChart(data);
+    };
+
+    createDropdownCountiesElements = (continents, continentName = "Africa") => {
+        while (this.countriesDropdownMenu.firstChild) {
+            this.countriesDropdownMenu.removeChild(
+                this.countriesDropdownMenu.firstChild
+            );
+        }
+        continents[continentName].forEach((country) => {
+            const element = document.createElement("div");
+            element.textContent = `${country.name}`;
+            this.countriesDropdownMenu.appendChild(element);
+        });
     };
 }

@@ -13,7 +13,6 @@ export class ContinentSelector {
     addEventToAllContinents = () => {
         this.allContinentsBtn.forEach((continentBtn) => {
             continentBtn.addEventListener("click", (e) => {
-                console.log(e.target);
                 this.selectedContinent.value =
                     continentBtn.getAttribute("data-continent");
             });
