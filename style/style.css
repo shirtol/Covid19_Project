@@ -8,14 +8,30 @@ html {
     font-size: 62.5%;
 }
 
-/* body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+body {
     height: 100vh;
-} */
+}
 
-.container {
+.statistics-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    height: max-content;
+    /* justify-content: center; */
+}
+
+.continents-container {
+    display: flex;
+    gap: 2rem;
+}
+
+.country-container {
+    display: flex;
+    gap: 2rem;
+}
+
+.chart-container {
     max-width: 120rem;
     height: 40rem;
     margin: 0 auto;
