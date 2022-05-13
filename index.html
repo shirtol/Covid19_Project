@@ -11,7 +11,9 @@
             src="https://kit.fontawesome.com/54d7603b2e.js"
             crossorigin="anonymous"
         ></script>
-        <title>Document</title>
+        <link rel="icon" type="image/x-icon" href="./assets/img/icon3.png" />
+
+        <title>COVID-19 | Statistics</title>
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"
             integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ=="
@@ -21,10 +23,10 @@
         <script src="./script/index.js" defer type="module"></script>
     </head>
     <body>
+        <div class="bg-container"></div>
         <div class="statistics-container">
             <div class="header">Live Update COVID-19</div>
             <div class="continents-container">
-                <div class="continent-title">Continent</div>
                 <div class="continent" data-continent="Africa">Africa</div>
                 <div class="continent" data-continent="Americas">Americas</div>
                 <div class="continent" data-continent="Asia">Asia</div>
@@ -32,7 +34,6 @@
                 <div class="continent" data-continent="Oceania">Oceania</div>
             </div>
             <div class="country-container">
-                <div class="country-title">Country</div>
                 <div class="country-dropdown">
                     <button class="drop-btn">
                         Choose Country
@@ -47,7 +48,7 @@
         </div>
 
         <div class="chart-container">
-            <canvas id="myChart"></canvas>
+            <canvas id="chart"></canvas>
         </div>
     </body>
 </html>
