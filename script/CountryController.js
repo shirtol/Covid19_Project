@@ -81,10 +81,41 @@ export class CountryController {
     }
 
     initializeView = () => {
+        this.addEventToCountriesBtn();
+        this.closeDropdownWhenClickOnWindow();
         this.countryUI.createChart(this.continents, "Africa");
+        this.countryUI.createDropdownCountiesElements(
+            this.continents,
+            "Africa"
+        );
         this.countryUI.continentSelector.selectedContinent.addChangeListener(
             (selectedContinent) =>
                 this.countryUI.createChart(this.continents, selectedContinent)
         );
+        this.countryUI.continentSelector.selectedContinent.addChangeListener(
+            (selectedContinent) =>
+                this.countryUI.createDropdownCountiesElements(
+                    this.continents,
+                    selectedContinent
+                )
+        );
+    };
+
+    addEventToCountriesBtn = () => {
+        this.countryUI.countriesDropdownBtn.addEventListener("click", (e) => {
+            console.log(e.target);
+            this.countryUI.countriesDropdownMenu.classList.toggle("show");
+        });
+    };
+
+    closeDropdownWhenClickOnWindow = () => {
+        window.onclick = (e) => {
+            if (!e.target.classList.contains("drop-btn")) {
+                const myDropdown = this.countryUI.countriesDropdownMenu;
+                if (myDropdown.classList.contains("show")) {
+                    myDropdown.classList.remove("show");
+                }
+            }
+        };
     };
 }
