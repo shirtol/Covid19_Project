@@ -6,6 +6,7 @@ import { Observable } from "./Observable.js";
 export class ContinentSelector {
     constructor() {
         this.allContinentsBtn = document.querySelectorAll("[data-continent]");
+        this.dropdownBtn = document.querySelector(".drop-btn");
         this.selectedContinent = new Observable("Africa");
         this.addEventToAllContinents();
     }
@@ -15,6 +16,7 @@ export class ContinentSelector {
             continentBtn.addEventListener("click", (e) => {
                 this.selectedContinent.value =
                     continentBtn.getAttribute("data-continent");
+                this.dropdownBtn.firstChild.textContent = "Choose Country";
             });
         });
     };

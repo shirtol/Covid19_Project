@@ -1,6 +1,7 @@
 import { Country } from "./Country.js";
 import { CountryUI } from "./CountryUI.js";
 import { Utils } from "./Utils.js";
+import { CountrySelector } from "./CountrySelector.js";
 
 /**
  * @class
@@ -83,14 +84,14 @@ export class CountryController {
     initializeView = () => {
         this.addEventToCountriesBtn();
         this.closeDropdownWhenClickOnWindow();
-        this.countryUI.drawChart(this.continents, "Africa");
+        this.countryUI.drawContinentsChart(this.continents, "Africa");
         this.countryUI.createDropdownCountiesElements(
             this.continents,
             "Africa"
         );
         this.countryUI.continentSelector.selectedContinent.addChangeListener(
             (selectedContinent) =>
-                this.countryUI.drawChart(
+                this.countryUI.drawContinentsChart(
                     this.continents,
                     selectedContinent,
                     "critical"
@@ -103,11 +104,23 @@ export class CountryController {
                     selectedContinent
                 )
         );
+        this.countryUI.continentSelector.selectedContinent.addChangeListener(
+            () => {
+                this.countryUI.countrySelector = new CountrySelector();
+            }
+        );
+        this.countryUI.countrySelector.selectedCountry.addChangeListener(
+            (selectedCountry) =>
+                this.countryUI.drawCountryChart(
+                    selectedCountry,
+                    this.continents,
+                    this.countryUI.continentSelector.selectedContinent.value
+                )
+        );
     };
 
     addEventToCountriesBtn = () => {
         this.countryUI.countriesDropdownBtn.addEventListener("click", (e) => {
-            console.log(e.target);
             this.countryUI.countriesDropdownMenu.classList.toggle("show");
         });
     };
