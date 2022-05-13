@@ -7,6 +7,10 @@
         <link rel="stylesheet" href="./style/normalize.css" />
         <link rel="stylesheet" href="./style/style.css" />
         <link rel="stylesheet" href="./style/mobile.css" />
+        <script
+            src="https://kit.fontawesome.com/54d7603b2e.js"
+            crossorigin="anonymous"
+        ></script>
         <title>Document</title>
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"
@@ -17,8 +21,33 @@
         <script src="./script/index.js" defer type="module"></script>
     </head>
     <body>
-        <div class="container">
-            <canvas id="myChart" width="200" height="100"></canvas>
+        <div class="statistics-container">
+            <div class="header">Live Update COVID-19</div>
+            <div class="continents-container">
+                <div class="continent-title">Continent</div>
+                <div class="continent" data-continent="Africa">Africa</div>
+                <div class="continent" data-continent="Americas">Americas</div>
+                <div class="continent" data-continent="Asia">Asia</div>
+                <div class="continent" data-continent="Europe">Europe</div>
+                <div class="continent" data-continent="Oceania">Oceania</div>
+            </div>
+            <div class="country-container">
+                <div class="country-title">Country</div>
+                <div class="country-dropdown">
+                    <button class="drop-btn">
+                        Choose Country
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div
+                        class="countries-dropdown-content"
+                        id="all-countries"
+                    ></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="myChart"></canvas>
         </div>
     </body>
 </html>

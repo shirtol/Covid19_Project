@@ -1,4 +1,5 @@
 import { Country } from "./Country.js";
+import { CountryUI } from "./CountryUI.js";
 import { Utils } from "./Utils.js";
 
 /**
@@ -61,6 +62,7 @@ export class CountryController {
             console.log(err);
         }
     };
+
     /**
      *
      * @param {{"":Country[],Africa:Country[],Americas:Country[],Asia:Country[],Europe:Country[], Oceania:Country[]}} continentsObj
@@ -71,5 +73,18 @@ export class CountryController {
          * @type {{"":Country[],Africa:Country[],Americas:Country[],Asia:Country[],Europe:Country[], Oceania:Country[]}}
          */
         this.continents = continentsObj;
+
+        /**
+         * @type {CountryUI}
+         */
+        this.countryUI = new CountryUI();
     }
+
+    initializeView = () => {
+        this.countryUI.createChart(this.continents, "Africa");
+        this.countryUI.continentSelector.selectedContinent.addChangeListener(
+            (selectedContinent) =>
+                this.countryUI.createChart(this.continents, selectedContinent)
+        );
+    };
 }
