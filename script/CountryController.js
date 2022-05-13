@@ -41,7 +41,7 @@ export class CountryController {
     static getContinentsData = async () => {
         try {
             const data = await Utils.getFetchedData(
-                "https://cors-anywhere.herokuapp.com/https://restcountries.herokuapp.com/api/v1"
+                "https://nameless-citadel-58066.herokuapp.com/https://restcountries.herokuapp.com/api/v1"
             );
             // const specificData = {};
             const countriesArr = await CountryController.getArrOfCountries();
