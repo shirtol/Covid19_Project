@@ -62,9 +62,13 @@ body {
 
 .chart-container {
     max-width: 120rem;
-    height: 40rem;
+    height: 70%;
     margin: 0 auto;
     /* height: 20rem; */
+}
+
+#chart {
+    width: 80%;
 }
 
 .country-dropdown {
@@ -73,10 +77,10 @@ body {
 
 .drop-btn {
     cursor: pointer;
-    font-size: 16px;
+    font-size: 1.2rem;
     border: none;
     outline: none;
-    padding: 1.4rem 1.6rem;
+    padding: 1.2rem 1.4rem;
     margin: 0;
     border-radius: 4px;
 }

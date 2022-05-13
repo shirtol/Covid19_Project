@@ -3,7 +3,7 @@ import { ContinentSelector } from "./ContinentSelector.js";
 export class CountryUI {
     constructor() {
         Chart.defaults.font.size = 10;
-        this.ctx = document.getElementById("myChart").getContext("2d");
+        this.ctx = document.getElementById("chart").getContext("2d");
         this.countriesDropdownMenu = document.querySelector("#all-countries");
         this.countriesDropdownBtn = document.querySelector(".drop-btn");
         this.continentSelector = new ContinentSelector();
@@ -28,7 +28,7 @@ export class CountryUI {
 
     drawChart = (chosenData) => {
         if (this.chart === null) {
-            const myChart = new Chart(this.ctx, {
+            const chart = new Chart(this.ctx, {
                 type: "bar",
                 data: {
                     labels: Object.keys(chosenData),
@@ -53,6 +53,8 @@ export class CountryUI {
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
+
                     plugins: {
                         title: {
                             display: false,
@@ -77,7 +79,7 @@ export class CountryUI {
                     },
                 },
             });
-            this.chart = myChart;
+            this.chart = chart;
         } else {
             this.chart.data.labels = Object.keys(chosenData);
             this.chart.data.datasets[0].data = Object.values(chosenData);
