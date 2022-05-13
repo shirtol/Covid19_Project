@@ -44,7 +44,7 @@ export class CountryUI {
                                     countryName,
                                     countryIdx
                                 );
-                                return `rgba(${r},${g},${b},0.4`;
+                                return `rgba(${r},${g},${b},0.6`;
                             },
                             tension: 0.4,
                             cubicInterpolationMode: "monotone",
