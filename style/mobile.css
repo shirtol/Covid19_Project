@@ -15,7 +15,8 @@
     }
 
     .statistics-container,
-    .country-chart {
+    .country-chart,
+    .chart-container {
         display: none;
     }
 }
