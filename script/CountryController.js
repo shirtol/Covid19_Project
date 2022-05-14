@@ -13,6 +13,8 @@ export class CountryController {
      */
     static async build() {
         const continentsObj = await CountryController.getContinentsData();
+        document.querySelector(".lds-roller").style.display = "none";
+        document.querySelector(".chart-container").style.display = "block";
         return new CountryController(continentsObj);
     }
 
