@@ -198,7 +198,12 @@ export class ChartsFactory {
                 continentName,
                 countryName
             )[dataIdx].vals,
-            backgroundColor: ["#577F99", "#CE9AB3", "#824859", "#6f98b3"],
+            backgroundColor: [
+                "#577F998a",
+                "#CE9AB38a",
+                "#8248598a",
+                "#6f98b38a",
+            ],
         };
     };
 
@@ -232,6 +237,10 @@ export class ChartsFactory {
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
+                        title: {
+                            display: true,
+                            text: countryName,
+                        },
                         legend: {
                             labels: {
                                 generateLabels: (chart) => {
@@ -257,6 +266,7 @@ export class ChartsFactory {
                     dataIdx
                 ),
             ];
+            chartWrapper.chart.options.plugins.title.text = countryName;
             chartWrapper.chart.update();
         }
     };

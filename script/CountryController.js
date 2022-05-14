@@ -120,12 +120,9 @@ export class CountryController {
         );
         this.countryUI.continentSelector.selectedContinent.addChangeListener(
             () => {
-                this.countryUI.countrySelector = new CountrySelector();
-                this.countryUI.countrySelector.selectedCountry.addChangeListener(
+                this.countryUI.initializeCharts(
                     this.changeListenerToSelectedCountry
                 );
-                this.countryUI.chartsFactory.countryChart?.destroy(); //optional chaining: if this.countryUI.countryChart !== null , then the destroy command will be executed.
-                this.countryUI.chartsFactory.countryChart = null;
             }
         );
 
