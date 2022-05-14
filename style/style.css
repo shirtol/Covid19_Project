@@ -170,3 +170,8 @@ body {
 .continent:hover::before {
     transform: scaleX(1);
 }
+
+.country-chart {
+    display: flex;
+    width: 50%;
+}
