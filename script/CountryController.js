@@ -82,7 +82,7 @@ export class CountryController {
     }
 
     changeListenerToSelectedCountry = (selectedCountry) =>
-        this.countryUI.drawCountryChart(
+        this.countryUI.chartsFactory.drawCountryChart(
             selectedCountry,
             this.continents,
             this.countryUI.continentSelector.selectedContinent.value
@@ -91,14 +91,17 @@ export class CountryController {
     initializeView = () => {
         this.addEventToCountriesBtn();
         this.closeDropdownWhenClickOnWindow();
-        this.countryUI.drawContinentsChart(this.continents, "Africa");
-        this.countryUI.createDropdownCountiesElements(
+        this.countryUI.chartsFactory.drawContinentsChart(
+            this.continents,
+            "Africa"
+        );
+        this.countryUI.createDropdownCountriesElements(
             this.continents,
             "Africa"
         );
         this.countryUI.continentSelector.selectedContinent.addChangeListener(
             (selectedContinent) =>
-                this.countryUI.drawContinentsChart(
+                this.countryUI.chartsFactory.drawContinentsChart(
                     this.continents,
                     selectedContinent,
                     "critical"
@@ -106,7 +109,7 @@ export class CountryController {
         );
         this.countryUI.continentSelector.selectedContinent.addChangeListener(
             (selectedContinent) =>
-                this.countryUI.createDropdownCountiesElements(
+                this.countryUI.createDropdownCountriesElements(
                     this.continents,
                     selectedContinent
                 )
@@ -117,8 +120,8 @@ export class CountryController {
                 this.countryUI.countrySelector.selectedCountry.addChangeListener(
                     this.changeListenerToSelectedCountry
                 );
-                this.countryUI.countryChart?.destroy(); //optional chaining: if this.countryUI.countryChart !== null , then the destroy command will be executed.
-                this.countryUI.countryChart = null;
+                this.countryUI.chartsFactory.countryChart?.destroy(); //optional chaining: if this.countryUI.countryChart !== null , then the destroy command will be executed.
+                this.countryUI.chartsFactory.countryChart = null;
             }
         );
 
