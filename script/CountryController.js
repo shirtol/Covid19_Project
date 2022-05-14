@@ -117,7 +117,7 @@ export class CountryController {
                 this.countryUI.countrySelector.selectedCountry.addChangeListener(
                     this.changeListenerToSelectedCountry
                 );
-                this.countryUI.countryChart.destroy();
+                this.countryUI.countryChart?.destroy(); //optional chaining: if this.countryUI.countryChart !== null , then the destroy command will be executed.
                 this.countryUI.countryChart = null;
             }
         );
