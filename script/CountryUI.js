@@ -65,6 +65,6 @@ export class CountryUI {
         this.destroyChart(this.chartsFactory.todayDataChart);
         document.querySelector("#latest-data").classList.remove("card");
         document.querySelector("#today-data").classList.remove("card");
-        document.querySelector(".country-chart").style.display = "flex";
+        document.querySelector(".country-chart").style.display = "none";
     };
 }
