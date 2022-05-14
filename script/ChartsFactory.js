@@ -254,6 +254,13 @@ export class ChartsFactory {
                             },
                         },
                     },
+                    scales: {
+                        r: {
+                            grid: {
+                                color: "#3333334a",
+                            },
+                        },
+                    },
                 },
             });
             chartWrapper.chart = chart;
