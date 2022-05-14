@@ -22,12 +22,14 @@
         ></script>
         <script src="./script/index.js" defer type="module"></script>
     </head>
-    <body>
+    <body class="scroller">
         <div class="bg-container"></div>
         <div class="statistics-container">
             <div class="header">Live Update COVID-19</div>
             <div class="continents-container">
-                <div class="continent" data-continent="Africa">Africa</div>
+                <div class="continent selected" data-continent="Africa">
+                    Africa
+                </div>
                 <div class="continent" data-continent="Americas">Americas</div>
                 <div class="continent" data-continent="Asia">Asia</div>
                 <div class="continent" data-continent="Europe">Europe</div>
@@ -40,7 +42,7 @@
                         <i class="fa fa-caret-down"></i>
                     </button>
                     <div
-                        class="countries-dropdown-content"
+                        class="countries-dropdown-content scroller"
                         id="all-countries"
                     ></div>
                 </div>
@@ -49,6 +51,9 @@
 
         <div class="chart-container">
             <canvas id="chart"></canvas>
+        </div>
+        <div class="country-chart">
+            <canvas id="polar-area"></canvas>
         </div>
     </body>
 </html>
