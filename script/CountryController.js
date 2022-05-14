@@ -81,6 +81,13 @@ export class CountryController {
         this.countryUI = new CountryUI();
     }
 
+    changeListenerToSelectedCountry = (selectedCountry) =>
+        this.countryUI.drawCountryChart(
+            selectedCountry,
+            this.continents,
+            this.countryUI.continentSelector.selectedContinent.value
+        );
+
     initializeView = () => {
         this.addEventToCountriesBtn();
         this.closeDropdownWhenClickOnWindow();
@@ -107,15 +114,16 @@ export class CountryController {
         this.countryUI.continentSelector.selectedContinent.addChangeListener(
             () => {
                 this.countryUI.countrySelector = new CountrySelector();
+                this.countryUI.countrySelector.selectedCountry.addChangeListener(
+                    this.changeListenerToSelectedCountry
+                );
+                this.countryUI.countryChart.destroy();
+                this.countryUI.countryChart = null;
             }
         );
+
         this.countryUI.countrySelector.selectedCountry.addChangeListener(
-            (selectedCountry) =>
-                this.countryUI.drawCountryChart(
-                    selectedCountry,
-                    this.continents,
-                    this.countryUI.continentSelector.selectedContinent.value
-                )
+            this.changeListenerToSelectedCountry
         );
     };
 
