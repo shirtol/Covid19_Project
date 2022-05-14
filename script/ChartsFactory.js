@@ -1,4 +1,5 @@
 import { ChartWrapper } from "./ChartWrapper.js";
+import { Utils } from "./Utils.js";
 
 export class ChartsFactory {
     constructor() {
@@ -9,16 +10,6 @@ export class ChartsFactory {
         this.radarDataChart = new ChartWrapper("radar-chart");
     }
 
-    //! Move to utils.js
-    getColorByCountryName = (countryName, countryIdx) => {
-        const allLetters = "abcdefghijklmnopqrstuvwxyz";
-        const firstLetterNum =
-            allLetters.indexOf(countryName[0].toLowerCase()) * 9;
-
-        return [firstLetterNum, 60 + countryIdx, 100 + countryIdx];
-    };
-
-    //! move to continents.js
     getObjOfData = (continents, continentName, condition = "critical") => {
         return continents[continentName].reduce((acc, curr) => {
             acc[curr.name] = curr.latestData[condition];
@@ -26,38 +17,16 @@ export class ChartsFactory {
         }, {});
     };
 
-    //! don't need to save all objects in variable , just return them in array
     createConditionObj = (continents, continentName) => {
-        const confirmedConditionObj = this.getObjOfData(
-            continents,
-            continentName,
-            "confirmed"
-        );
-        const recoveredConditionObj = this.getObjOfData(
-            continents,
-            continentName,
-            "recovered"
-        );
-        const criticalConditionObj = this.getObjOfData(
-            continents,
-            continentName,
-            "critical"
-        );
-        const deathsConditionObj = this.getObjOfData(
-            continents,
-            continentName,
-            "deaths"
-        );
         return [
-            confirmedConditionObj,
-            recoveredConditionObj,
-            criticalConditionObj,
-            deathsConditionObj,
+            this.getObjOfData(continents, continentName, "confirmed"),
+            this.getObjOfData(continents, continentName, "recovered"),
+            this.getObjOfData(continents, continentName, "critical"),
+            this.getObjOfData(continents, continentName, "deaths"),
         ];
     };
 
     /**
-     *!!REFACTORINGGG
      * @param {*} continents
      * @param {string} continentName
      * @param {string} countryName
@@ -101,7 +70,7 @@ export class ChartsFactory {
             backgroundColor: (point) => {
                 const countryIdx = point.index;
                 const countryName = Object.keys(conditionObj)[countryIdx];
-                const [r, g, b] = this.getColorByCountryName(
+                const [r, g, b] = Utils.getColorByCountryName(
                     countryName,
                     countryIdx + colorOffset
                 );
@@ -280,39 +249,6 @@ export class ChartsFactory {
             chartWrapper.chart.update();
         }
     };
-
-    // getObjForBubbleChart = (continents, continentName) => {
-    //     return continents[continentName].reduce((acc, curr) => {
-    //         acc[curr.name] = curr.latestData.calculated;
-    //         return acc;
-    //     }, {});
-    // };
-
-    // generateDataSetFromObject = (dataObj, rateType) => {
-    //     const dataSetArr = Object.entries(dataObj).map((keyValPair) => {
-    //         const xAxis = keyValPair[0];
-    //         const yAxis = keyValPair[1].casesPerMillion;
-    //         const rAxis = keyValPair[1][rateType];
-    //         return { x: xAxis, y: yAxis, r: rAxis };
-    //     });
-    //     return dataSetArr;
-    // };
-
-    // createDataSetForBubbleChart = (dataObj, titleIdentifier, colorOffset, rateType) => {
-    //     return {
-    //         label: titleIdentifier,
-    //         data: this.generateDataSetFromObject(dataObj, rateType),
-    //         backgroundColor: (point) => {
-    //             const countryIdx = point.index;
-    //             const countryName = Object.keys(dataObj)[countryIdx];
-    //             const [r, g, b] = this.getColorByCountryName(
-    //                 countryName,
-    //                 countryIdx + colorOffset
-    //             );
-    //             return `rgba(${r},${g},${b},0.6`;
-    //         },
-    //     };
-    // };
 
     getObjOfCountryLatestCalculatedData = (
         continents,

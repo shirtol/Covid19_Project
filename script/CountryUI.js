@@ -52,7 +52,7 @@ export class CountryUI {
     };
 
     destroyChart = (chartWrapper) => {
-        chartWrapper.chart?.destroy(); //optional chaining: if this.countryChart !== null , then the destroy command will be executed.
+        chartWrapper.chart?.destroy(); //optional chaining: if chartWrapper.chart !== null , then the destroy command will be executed.
         chartWrapper.chart = null;
     };
 
@@ -76,5 +76,6 @@ export class CountryUI {
         document.querySelector("#today-data").classList.remove("card");
         document.querySelector(".country-chart").style.display = "none";
         document.querySelector(".radar-country-chart").style.display = "none";
+        document.querySelector("#down-arrow").style.display = "none";
     };
 }

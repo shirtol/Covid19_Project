@@ -24,7 +24,12 @@
     .statistics-container,
     .country-chart,
     .chart-container,
-    .lds-roller {
+    .lds-roller,
+    .down-arrow,
+    .radar-country-chart,
+    .today-data-chart,
+    .latest-data-chart,
+    #radar-chart {
         display: none;
     }
 }

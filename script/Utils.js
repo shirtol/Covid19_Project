@@ -14,4 +14,12 @@ export class Utils {
             console.error(err);
         }
     };
+
+    static getColorByCountryName = (countryName, countryIdx) => {
+        const allLetters = "abcdefghijklmnopqrstuvwxyz";
+        const firstLetterNum =
+            allLetters.indexOf(countryName[0].toLowerCase()) * 9;
+
+        return [firstLetterNum, 60 + countryIdx, 100 + countryIdx];
+    };
 }
