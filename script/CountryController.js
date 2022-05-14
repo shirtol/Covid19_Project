@@ -81,12 +81,16 @@ export class CountryController {
         this.countryUI = new CountryUI();
     }
 
-    changeListenerToSelectedCountry = (selectedCountry) =>
-        this.countryUI.chartsFactory.drawCountryChart(
+    changeListenerToSelectedCountry = (selectedCountry) => {
+        this.countryUI.drawCountryLatestDataChart(
             selectedCountry,
-            this.continents,
-            this.countryUI.continentSelector.selectedContinent.value
+            this.continents
         );
+        this.countryUI.drawCountryTodayDataChart(
+            selectedCountry,
+            this.continents
+        );
+    };
 
     initializeView = () => {
         this.addEventToCountriesBtn();

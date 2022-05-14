@@ -29,4 +29,23 @@ export class CountryUI {
         });
         this.countrySelector = new CountrySelector();
     };
+
+    drawCountryLatestDataChart = (selectedCountry, continents) => {
+        this.chartsFactory.drawCountryChart(
+            selectedCountry,
+            continents,
+            this.continentSelector.selectedContinent.value,
+            0,
+            this.chartsFactory.latestDataChart
+        );
+    };
+    drawCountryTodayDataChart = (selectedCountry, continents) => {
+        this.chartsFactory.drawCountryChart(
+            selectedCountry,
+            continents,
+            this.continentSelector.selectedContinent.value,
+            1,
+            this.chartsFactory.todayDataChart
+        );
+    };
 }

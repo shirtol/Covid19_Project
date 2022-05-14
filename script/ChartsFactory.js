@@ -1,14 +1,11 @@
+import { ChartWrapper } from "./ChartWrapper.js";
+
 export class ChartsFactory {
     constructor() {
-        this.chart = null;
-        this.countryChart = null;
         Chart.defaults.font.size = 12;
-        this.continentsChartContext = document
-            .getElementById("chart")
-            .getContext("2d");
-        this.countriesChartContext = document
-            .getElementById("polar-area")
-            .getContext("2d");
+        this.continentChart = new ChartWrapper("chart");
+        this.latestDataChart = new ChartWrapper("latest-data");
+        this.todayDataChart = new ChartWrapper("today-data");
     }
 
     //! Move to utils.js
@@ -72,6 +69,27 @@ export class ChartsFactory {
         return [country.latestData, country.todayData];
     };
 
+    getSortedDataObj = (dataObj) => {
+        const sortedKeys = Object.keys(dataObj).sort();
+        const sortedVals = [];
+        Object.entries(dataObj).forEach((condition) => {
+            sortedVals[sortedKeys.indexOf(condition[0])] = condition[1];
+        });
+        return { keys: sortedKeys, vals: sortedVals };
+    };
+
+    orderCountryObject = (continents, continentName, countryName) => {
+        const [latestDataObj, todayDataObj] = this.getObjOfCountryData(
+            continents,
+            continentName,
+            countryName
+        );
+        return [
+            this.getSortedDataObj(latestDataObj),
+            this.getSortedDataObj(todayDataObj),
+        ];
+    };
+
     createDataset = (conditionObj, titleIdentifier, colorOffset) => {
         return {
             label: `Number of ${titleIdentifier} cases`,
@@ -95,8 +113,8 @@ export class ChartsFactory {
             continents,
             continentName
         );
-        if (this.chart === null) {
-            const chart = new Chart(this.continentsChartContext, {
+        if (this.continentChart.chart === null) {
+            const chart = new Chart(this.continentChart.canvas, {
                 type: "bar",
                 data: {
                     labels: Object.keys(conditionsObjectsArr[0]),
@@ -149,14 +167,15 @@ export class ChartsFactory {
                     },
                 },
             });
-            this.chart = chart;
-            console.log(this.chart);
+            this.continentChart.chart = chart;
         } else {
-            this.chart.data.labels = Object.keys(conditionsObjectsArr[0]);
-            this.chart.data.datasets.forEach((dataset, idx) => {
+            this.continentChart.chart.data.labels = Object.keys(
+                conditionsObjectsArr[0]
+            );
+            this.continentChart.chart.data.datasets.forEach((dataset, idx) => {
                 dataset.data = Object.values(conditionsObjectsArr[idx]);
             });
-            this.chart.update();
+            this.continentChart.chart.update();
         }
     };
 
@@ -167,32 +186,44 @@ export class ChartsFactory {
      * @param {string} continentName
      * @returns {Object}
      */
-    createDatasetPerCountry = (countryName, continents, continentName) => {
-        const dataset = {
-            label: countryName,
-            data: Object.values(
-                this.getObjOfCountryData(
-                    continents,
-                    continentName,
-                    countryName
-                )[0]
-            ),
+    createDatasetPerCountry = (
+        countryName,
+        continents,
+        continentName,
+        dataIdx
+    ) => {
+        return {
+            data: this.orderCountryObject(
+                continents,
+                continentName,
+                countryName
+            )[dataIdx].vals,
             backgroundColor: ["#577F99", "#CE9AB3", "#824859", "#6f98b3"],
         };
-        return dataset;
     };
 
-    drawCountryChart = (countryName, continents, continentName) => {
-        if (this.countryChart === null) {
-            const chart = new Chart(this.countriesChartContext, {
+    drawCountryChart = (
+        countryName,
+        continents,
+        continentName,
+        dataIdx,
+        chartWrapper
+    ) => {
+        if (chartWrapper.chart === null) {
+            const chart = new Chart(chartWrapper.canvas, {
                 type: "polarArea",
                 data: {
-                    labels: ["confirmed", "critical", "deaths", "recovered"],
+                    labels: this.orderCountryObject(
+                        continents,
+                        continentName,
+                        countryName
+                    )[dataIdx].keys,
                     datasets: [
                         this.createDatasetPerCountry(
                             countryName,
                             continents,
-                            continentName
+                            continentName,
+                            dataIdx
                         ),
                     ],
                     hoverOffset: 4,
@@ -200,18 +231,33 @@ export class ChartsFactory {
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                generateLabels: (chart) => {
+                                    const datasets = chart.data.datasets;
+                                    return datasets[0].data.map((data, i) => ({
+                                        text: `${chart.data.labels[i]} - ${data}`,
+                                        fillStyle:
+                                            datasets[0].backgroundColor[i],
+                                    }));
+                                },
+                            },
+                        },
+                    },
                 },
             });
-            this.countryChart = chart;
+            chartWrapper.chart = chart;
         } else {
-            this.countryChart.data.datasets = [
+            chartWrapper.chart.data.datasets = [
                 this.createDatasetPerCountry(
                     countryName,
                     continents,
-                    continentName
+                    continentName,
+                    dataIdx
                 ),
             ];
-            this.countryChart.update();
+            chartWrapper.chart.update();
         }
     };
 }
