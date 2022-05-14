@@ -2,6 +2,8 @@ import { Country } from "./Country.js";
 import { CountryUI } from "./CountryUI.js";
 import { Utils } from "./Utils.js";
 import { CountrySelector } from "./CountrySelector.js";
+import { LocalStorageWrapper } from "./LocalStorageWrapper.js";
+import { TimeUtils } from "./TimeUtils.js";
 
 /**
  * @class
@@ -9,12 +11,22 @@ import { CountrySelector } from "./CountrySelector.js";
 export class CountryController {
     /**
      *
+     * @type {string}
+     */
+    static get CONTINENTS_OBJ_IDENTIFIER() {
+        return "continentsObj";
+    }
+
+    /**
+     *
      * @returns {Promise<CountryController>}
      */
     static async build() {
         const continentsObj = await CountryController.getContinentsData();
+
         document.querySelector(".lds-roller").style.display = "none";
         document.querySelector(".chart-container").style.display = "block";
+
         return new CountryController(continentsObj);
     }
 
@@ -33,7 +45,7 @@ export class CountryController {
 
             return specificData;
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
     };
 
@@ -44,12 +56,23 @@ export class CountryController {
 
     static getContinentsData = async () => {
         try {
+            if (
+                LocalStorageWrapper.getWithExpiry(
+                    CountryController.CONTINENTS_OBJ_IDENTIFIER
+                )
+            ) {
+                return JSON.parse(
+                    LocalStorageWrapper.getWithExpiry(
+                        CountryController.CONTINENTS_OBJ_IDENTIFIER
+                    )
+                );
+            }
+
             const data = await Utils.getFetchedData(
                 "https://nameless-citadel-58066.herokuapp.com/https://restcountries.herokuapp.com/api/v1"
             );
-            // const specificData = {};
             const countriesArr = await CountryController.getArrOfCountries();
-            return data.reduce((acc, country) => {
+            const continentsObj = data.reduce((acc, country) => {
                 const currCountry = countriesArr.find(
                     (state) => state.name === country.name.common
                 );
@@ -61,8 +84,16 @@ export class CountryController {
                 }
                 return acc;
             }, {});
+
+            LocalStorageWrapper.setWithExpiry(
+                CountryController.CONTINENTS_OBJ_IDENTIFIER,
+                JSON.stringify(continentsObj),
+                TimeUtils.hoursToMilliSeconds(10)
+            );
+
+            return continentsObj;
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
     };
 
