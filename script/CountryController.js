@@ -1,7 +1,6 @@
 import { Country } from "./Country.js";
 import { CountryUI } from "./CountryUI.js";
 import { Utils } from "./Utils.js";
-import { CountrySelector } from "./CountrySelector.js";
 import { LocalStorageWrapper } from "./LocalStorageWrapper.js";
 import { TimeUtils } from "./TimeUtils.js";
 
@@ -127,7 +126,13 @@ export class CountryController {
             selectedCountry,
             this.continents
         );
+        this.countryUI.drawRadarChart(
+            this.continents,
+            this.countryUI.continentSelector.selectedContinent.value,
+            selectedCountry
+        );
         document.querySelector(".country-chart").style.display = "flex";
+        document.querySelector(".radar-country-chart").style.display = "flex";
     };
 
     initializeView = () => {

@@ -56,6 +56,15 @@ export class CountryUI {
         chartWrapper.chart = null;
     };
 
+    drawRadarChart = (continents, continentName, countryName) => {
+        const dataObj = this.chartsFactory.getObjOfCountryLatestCalculatedData(
+            continents,
+            continentName,
+            countryName
+        );
+        this.chartsFactory.drawRadarChart(dataObj, countryName);
+    };
+
     initializeCharts = (onSelectedCountryChanged) => {
         this.countrySelector = new CountrySelector();
         this.countrySelector.selectedCountry.addChangeListener(
