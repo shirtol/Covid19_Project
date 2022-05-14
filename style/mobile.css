@@ -9,6 +9,13 @@
     }
 }
 
+@media (max-width: 900px) {
+    /* Spinner */
+    .lds-roller {
+        margin-top: 3rem;
+    }
+}
+
 @media (orientation: portrait) {
     .rotate-screen-msg {
         display: flex;
@@ -16,7 +23,8 @@
 
     .statistics-container,
     .country-chart,
-    .chart-container {
+    .chart-container,
+    .lds-roller {
         display: none;
     }
 }
