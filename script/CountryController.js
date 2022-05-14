@@ -133,6 +133,7 @@ export class CountryController {
         );
         document.querySelector(".country-chart").style.display = "flex";
         document.querySelector(".radar-country-chart").style.display = "flex";
+        document.querySelector("#down-arrow").style.display = "block";
     };
 
     initializeView = () => {
@@ -178,9 +179,6 @@ export class CountryController {
         this.countryUI.countriesDropdownBtn.addEventListener("click", (e) => {
             this.countryUI.countriesDropdownMenu.classList.toggle("show");
         });
-        // document.querySelector(".fa-caret-down").addEventListener("click", (e) => {
-        //     this.countryUI.countriesDropdownMenu.classList.toggle("show");
-        // });
     };
 
     closeDropdownWhenClickOnWindow = () => {
