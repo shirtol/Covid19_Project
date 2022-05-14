@@ -6,6 +6,7 @@ export class ChartsFactory {
         this.continentChart = new ChartWrapper("chart");
         this.latestDataChart = new ChartWrapper("latest-data");
         this.todayDataChart = new ChartWrapper("today-data");
+        this.radarDataChart = new ChartWrapper("radar-chart");
     }
 
     //! Move to utils.js
@@ -70,7 +71,9 @@ export class ChartsFactory {
     };
 
     getSortedDataObj = (dataObj) => {
-        const sortedKeys = Object.keys(dataObj).sort();
+        const sortedKeys = Object.keys(dataObj)
+            .filter((key) => key !== "calculated")
+            .sort();
         const sortedVals = [];
         Object.entries(dataObj).forEach((condition) => {
             sortedVals[sortedKeys.indexOf(condition[0])] = condition[1];
@@ -275,6 +278,102 @@ export class ChartsFactory {
             ];
             chartWrapper.chart.options.plugins.title.text = countryName;
             chartWrapper.chart.update();
+        }
+    };
+
+    // getObjForBubbleChart = (continents, continentName) => {
+    //     return continents[continentName].reduce((acc, curr) => {
+    //         acc[curr.name] = curr.latestData.calculated;
+    //         return acc;
+    //     }, {});
+    // };
+
+    // generateDataSetFromObject = (dataObj, rateType) => {
+    //     const dataSetArr = Object.entries(dataObj).map((keyValPair) => {
+    //         const xAxis = keyValPair[0];
+    //         const yAxis = keyValPair[1].casesPerMillion;
+    //         const rAxis = keyValPair[1][rateType];
+    //         return { x: xAxis, y: yAxis, r: rAxis };
+    //     });
+    //     return dataSetArr;
+    // };
+
+    // createDataSetForBubbleChart = (dataObj, titleIdentifier, colorOffset, rateType) => {
+    //     return {
+    //         label: titleIdentifier,
+    //         data: this.generateDataSetFromObject(dataObj, rateType),
+    //         backgroundColor: (point) => {
+    //             const countryIdx = point.index;
+    //             const countryName = Object.keys(dataObj)[countryIdx];
+    //             const [r, g, b] = this.getColorByCountryName(
+    //                 countryName,
+    //                 countryIdx + colorOffset
+    //             );
+    //             return `rgba(${r},${g},${b},0.6`;
+    //         },
+    //     };
+    // };
+
+    getObjOfCountryLatestCalculatedData = (
+        continents,
+        continentName,
+        countryName
+    ) => {
+        const country = continents[continentName].find(
+            (country) => country.name === countryName
+        );
+        return country.latestData.calculated;
+    };
+
+    createDatasetForRadarChart = (dataObj, countryName) => {
+        return {
+            label: countryName,
+            data: this.getSortedDataObj(dataObj).vals,
+            fill: true,
+            backgroundColor: "rgba(255, 99, 132, 0.2)",
+            borderColor: "rgb(255, 99, 132)",
+            pointBackgroundColor: "rgb(255, 99, 132)",
+            pointBorderColor: "#fff",
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgb(255, 99, 132)",
+        };
+    };
+
+    drawRadarChart = (dataObj, countryName) => {
+        if (this.radarDataChart.chart === null) {
+            const chart = new Chart(this.radarDataChart.canvas, {
+                type: "radar",
+                data: {
+                    labels: this.getSortedDataObj(dataObj).keys,
+                    datasets: [
+                        this.createDatasetForRadarChart(dataObj, countryName),
+                    ],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: countryName,
+                        },
+                    },
+                    scales: {
+                        r: {
+                            grid: {
+                                color: "#3333334a",
+                            },
+                        },
+                    },
+                },
+            });
+            this.radarDataChart.chart = chart;
+        } else {
+            this.radarDataChart.chart.data.datasets = [
+                this.createDatasetForRadarChart(dataObj, countryName),
+            ];
+            this.radarDataChart.chart.options.plugins.title.text = countryName;
+            this.radarDataChart.chart.update();
         }
     };
 }

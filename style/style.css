@@ -132,8 +132,8 @@ body {
     display: block;
 }
 
-.country-chart {
-    display: flex;
+.country-chart,
+.radar-country-chart {
     display: none;
     width: 100%;
     align-items: center;
@@ -147,6 +147,11 @@ body {
     width: max-content; */
     width: 47.5%;
     height: 70%;
+}
+
+.radar-country-chart > * {
+    width: 47.5%;
+    height: 100%;
 }
 
 .card {
