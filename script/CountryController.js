@@ -135,6 +135,9 @@ export class CountryController {
         this.countryUI.countriesDropdownBtn.addEventListener("click", (e) => {
             this.countryUI.countriesDropdownMenu.classList.toggle("show");
         });
+        // document.querySelector(".fa-caret-down").addEventListener("click", (e) => {
+        //     this.countryUI.countriesDropdownMenu.classList.toggle("show");
+        // });
     };
 
     closeDropdownWhenClickOnWindow = () => {

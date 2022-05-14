@@ -1,0 +1,22 @@
+@media (max-width: 650px) {
+    .country-chart {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .country-chart > * {
+        width: 80%;
+    }
+}
+
+@media (orientation: portrait) {
+    .rotate-screen-msg {
+        display: flex;
+    }
+
+    .statistics-container,
+    .country-chart,
+    .chart-container {
+        display: none;
+    }
+}
