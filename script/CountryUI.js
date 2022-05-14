@@ -75,5 +75,6 @@ export class CountryUI {
         document.querySelector("#latest-data").classList.remove("card");
         document.querySelector("#today-data").classList.remove("card");
         document.querySelector(".country-chart").style.display = "none";
+        document.querySelector(".radar-country-chart").style.display = "none";
     };
 }
