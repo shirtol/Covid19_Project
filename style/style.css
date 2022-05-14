@@ -169,6 +169,8 @@ body {
     align-items: center;
 }
 
+/* Spinner */
+
 /* Animations */
 .continent::before {
     content: "";

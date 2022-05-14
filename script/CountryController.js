@@ -90,6 +90,7 @@ export class CountryController {
             selectedCountry,
             this.continents
         );
+        document.querySelector(".country-chart").style.display = "flex";
     };
 
     initializeView = () => {
