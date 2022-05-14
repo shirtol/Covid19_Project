@@ -2,6 +2,8 @@ import { Country } from "./Country.js";
 import { CountryUI } from "./CountryUI.js";
 import { Utils } from "./Utils.js";
 import { CountrySelector } from "./CountrySelector.js";
+import { LocalStorageWrapper } from "./LocalStorageWrapper.js";
+import { TimeUtils } from "./TimeUtils.js";
 
 /**
  * @class
@@ -55,12 +57,12 @@ export class CountryController {
     static getContinentsData = async () => {
         try {
             if (
-                localStorage.getItem(
+                LocalStorageWrapper.getWithExpiry(
                     CountryController.CONTINENTS_OBJ_IDENTIFIER
                 )
             ) {
                 return JSON.parse(
-                    localStorage.getItem(
+                    LocalStorageWrapper.getWithExpiry(
                         CountryController.CONTINENTS_OBJ_IDENTIFIER
                     )
                 );
@@ -83,9 +85,10 @@ export class CountryController {
                 return acc;
             }, {});
 
-            localStorage.setItem(
+            LocalStorageWrapper.setWithExpiry(
                 CountryController.CONTINENTS_OBJ_IDENTIFIER,
-                JSON.stringify(continentsObj)
+                JSON.stringify(continentsObj),
+                TimeUtils.hoursToMilliSeconds(10)
             );
 
             return continentsObj;
