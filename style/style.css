@@ -16,6 +16,7 @@ html {
 
 body {
     height: 100vh;
+    background-color: #dddfd4;
 }
 
 /* .bg-container {
@@ -75,6 +76,7 @@ body {
 #chart {
     width: 80%;
     height: 100vh;
+    margin-top: 2rem;
 }
 
 .country-dropdown {
@@ -131,17 +133,24 @@ body {
 
 .country-chart {
     display: flex;
-    width: 50%;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 3rem;
+    padding-bottom: 4rem;
 }
 
 .country-chart > * {
-    height: max-content;
-    width: max-content;
+    /* height: max-content;
+    width: max-content; */
+    width: 47.5%;
+    height: 70%;
 }
 
-/* [data-country] {
-    cursor: pointer;
-} */
+.card {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 4px;
+}
 
 /* Animations */
 .continent::before {

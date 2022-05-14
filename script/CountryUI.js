@@ -38,6 +38,7 @@ export class CountryUI {
             0,
             this.chartsFactory.latestDataChart
         );
+        document.querySelector("#latest-data").classList.add("card");
     };
     drawCountryTodayDataChart = (selectedCountry, continents) => {
         this.chartsFactory.drawCountryChart(
@@ -47,6 +48,7 @@ export class CountryUI {
             1,
             this.chartsFactory.todayDataChart
         );
+        document.querySelector("#today-data").classList.add("card");
     };
 
     destroyChart = (chartWrapper) => {
@@ -61,5 +63,7 @@ export class CountryUI {
         );
         this.destroyChart(this.chartsFactory.latestDataChart);
         this.destroyChart(this.chartsFactory.todayDataChart);
+        document.querySelector("#latest-data").classList.remove("card");
+        document.querySelector("#today-data").classList.remove("card");
     };
 }
