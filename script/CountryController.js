@@ -45,6 +45,8 @@ export class CountryController {
 
             return specificData;
         } catch (err) {
+            document.querySelector(".error-msg-container").style.display =
+                "flex";
             console.error(err);
         }
     };
@@ -93,6 +95,8 @@ export class CountryController {
 
             return continentsObj;
         } catch (err) {
+            document.querySelector(".error-msg-container").style.display =
+                "flex";
             console.error(err);
         }
     };
