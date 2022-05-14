@@ -48,4 +48,18 @@ export class CountryUI {
             this.chartsFactory.todayDataChart
         );
     };
+
+    destroyChart = (chartWrapper) => {
+        chartWrapper.chart?.destroy(); //optional chaining: if this.countryChart !== null , then the destroy command will be executed.
+        chartWrapper.chart = null;
+    };
+
+    initializeCharts = (onSelectedCountryChanged) => {
+        this.countrySelector = new CountrySelector();
+        this.countrySelector.selectedCountry.addChangeListener(
+            onSelectedCountryChanged
+        );
+        this.destroyChart(this.chartsFactory.latestDataChart);
+        this.destroyChart(this.chartsFactory.todayDataChart);
+    };
 }
