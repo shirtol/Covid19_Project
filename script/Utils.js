@@ -1,7 +1,6 @@
 export class Utils {
     static getFetchedData = async (url) => {
         try {
-            console.log("hi");
             const res = await fetch(url);
             const data = await res.json();
             return data;
