@@ -9,6 +9,7 @@ export class ContinentSelector {
         this.dropdownBtn = document.querySelector(".drop-btn");
         this.selectedContinent = new Observable("Africa");
         this.addEventToAllContinents();
+        this.changeSelectedContinentElement();
     }
 
     addEventToAllContinents = () => {
@@ -18,6 +19,15 @@ export class ContinentSelector {
                     continentBtn.getAttribute("data-continent");
                 this.dropdownBtn.firstChild.textContent = "Choose Country";
             });
+        });
+    };
+
+    changeSelectedContinentElement = () => {
+        this.selectedContinent.addChangeListener((newSelectedContinent) => {
+            document.querySelector(".selected").classList.remove("selected");
+            document
+                .querySelector(`[data-continent=${newSelectedContinent}]`)
+                .classList.add("selected");
         });
     };
 }
