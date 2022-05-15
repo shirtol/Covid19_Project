@@ -36,7 +36,8 @@ export class CountryUI {
             continents,
             this.continentSelector.selectedContinent.value,
             0,
-            this.chartsFactory.latestDataChart
+            this.chartsFactory.latestDataChart,
+            "Latest Overall"
         );
         document.querySelector("#latest-data").classList.add("card");
     };
@@ -46,7 +47,8 @@ export class CountryUI {
             continents,
             this.continentSelector.selectedContinent.value,
             1,
-            this.chartsFactory.todayDataChart
+            this.chartsFactory.todayDataChart,
+            "Today Overall"
         );
         document.querySelector("#today-data").classList.add("card");
     };

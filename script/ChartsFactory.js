@@ -184,7 +184,8 @@ export class ChartsFactory {
         continents,
         continentName,
         dataIdx,
-        chartWrapper
+        chartWrapper,
+        dataType
     ) => {
         if (chartWrapper.chart === null) {
             const chart = new Chart(chartWrapper.canvas, {
@@ -211,7 +212,7 @@ export class ChartsFactory {
                     plugins: {
                         title: {
                             display: true,
-                            text: countryName,
+                            text: dataType,
                         },
                         legend: {
                             labels: {
@@ -245,7 +246,6 @@ export class ChartsFactory {
                     dataIdx
                 ),
             ];
-            chartWrapper.chart.options.plugins.title.text = countryName;
             chartWrapper.chart.update();
         }
     };
