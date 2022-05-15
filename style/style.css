@@ -201,7 +201,7 @@ body {
     position: absolute;
     top: 1rem;
     right: 1rem;
-    color: var(--close-icon-color);
+    /* color: var(--close-icon-color); */
     cursor: pointer;
 }
 
